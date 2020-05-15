@@ -26,7 +26,7 @@ OBJ_DEBUG = OBJ_DEBUG
 
 all: $(AROBJS)
 	$(RANLIB) $(AROBJS)
-	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS) -lm
+	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS) -lc -lm
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
 	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
@@ -53,7 +53,7 @@ build_all:
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std all
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
 	$(RANLIB) $(AROBJS)
-	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS)
+	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS) -lc -lm
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
 	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
