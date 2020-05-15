@@ -36,6 +36,9 @@ all: $(AROBJS)
 debug_all:
 	cd $(OBJ_DEBUG); START_DIR=.. make all
 
+debug_all:
+	cd $(OBJ_DEBUG); START_DIR=.. make all
+
 build_all:
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main all
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.cui all
@@ -51,6 +54,11 @@ build_all:
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
 	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
+	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
+
+debug_build_all:
+	cd $(OBJ_DEBUG); START_DIR=.. make build_all
+	$(CP) $(TARGET_NORMAL) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
 
 debug_build_all:
