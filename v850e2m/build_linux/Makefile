@@ -39,12 +39,6 @@ debug_all:
 	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
 	$(NM) -n $(TARGET_NORMAL) > $(TARGET_NORMAL).syms
 
-debug_all:
-	cd $(OBJ_DEBUG); START_DIR=.. make all
-
-debug_all:
-	cd $(OBJ_DEBUG); START_DIR=.. make all
-
 build_all:
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main all
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.cui all
