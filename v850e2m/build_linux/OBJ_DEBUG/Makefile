@@ -27,6 +27,8 @@ all: $(AROBJS)
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET_DEBUG)  $(LIBS) -lm
 	$(CP) $(TARGET_DEBUG) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET_DEBUG)
+	$(NM) -n $(TARGET_DEBUG) > $(TARGET_DEBUG).syms
+	@echo "finish!!"
 
 build_all:
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main all
@@ -39,9 +41,11 @@ build_all:
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std all
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
 	$(RANLIB) $(AROBJS)
-	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS)
+	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET_DEBUG)  $(LIBS)
 	$(CP) $(TARGET_DEBUG) $(INSTALL_DIR)/
-	chmod +x $(INSTALL_DIR)/$(TARGET)
+	chmod +x $(INSTALL_DIR)/$(TARGET_DEBUG)
+	$(NM) -n $(TARGET_DEBUG) > $(TARGET_DEBUG).syms
+	@echo "finish!!"
 
 $(LIBMAIN):
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main all
@@ -80,9 +84,9 @@ clean:
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std clean
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main clean
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros clean
-	$(RM) -f $(TARGET) 
+	$(RM) -f $(TARGET_DEBUG) 
 	$(RM) -f $(INSTALL_DIR)/$(TARGET)
-		
+
 list:
 	@echo $(AROBJS)
 
