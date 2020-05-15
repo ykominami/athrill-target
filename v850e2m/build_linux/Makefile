@@ -29,9 +29,15 @@ all: $(AROBJS)
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS) -lc -lm
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
+<<<<<<< HEAD
 	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
 	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
 	$(NM) -n $(TARGET) > $(TARGET).syms
+||||||| merged common ancestors
+=======
+	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
+	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
+>>>>>>> use make variable START_DIR for multipl compilation
 
 debug_all:
 	cd $(OBJ_DEBUG); START_DIR=.. make all
@@ -58,8 +64,6 @@ build_all:
 
 debug_build_all:
 	cd $(OBJ_DEBUG); START_DIR=.. make build_all
-	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
-	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
 
 debug_build_all:
 	cd $(OBJ_DEBUG); START_DIR=.. make build_all
