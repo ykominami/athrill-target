@@ -1,4 +1,5 @@
-include Makefile.env
+START_DIR = .
+include $(START_DIR)/Makefile.env
 
 LIBCUI		:= libcui.a
 LIBCPU		:= libcpu.a
@@ -21,67 +22,79 @@ AROBJS		+= $(LIBLOADER)
 AROBJS		+= $(LIBSTD)
 AROBJS		+= $(LIBMROS)
 
+OBJ_DEBUG = OBJ_DEBUG
+
 all: $(AROBJS)
 	$(RANLIB) $(AROBJS)
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS) -lm
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
+debug_all:
+	cd $(OBJ_DEBUG); START_DIR=.. make all
 
 build_all:
-	make -f $(CORE_MKDIR)/Makefile.main all
-	make -f $(CORE_MKDIR)/Makefile.cui all
-	make -f $(TARGET_MKDIR)/Makefile.cpu all
-	make -f $(TARGET_MKDIR)/Makefile.device all
-	make -f $(CORE_MKDIR)/Makefile.bus all
-	make -f $(CORE_MKDIR)/Makefile.loader all
-	make -f $(CORE_MKDIR)/Makefile.mpu all
-	make -f $(CORE_MKDIR)/Makefile.std all
-	make -f $(CORE_MKDIR)/Makefile.mros all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.cui all
+	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu all
+	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.device all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.bus all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.loader all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mpu all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
 	$(RANLIB) $(AROBJS)
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS)
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
+	$(CP) $(TARGET_NORMAL) $(INSTALL_DIR)/
+	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
+
+debug_build_all:
+	cd $(OBJ_DEBUG); START_DIR=.. make build_all
 
 $(LIBMAIN):
-	make -f $(CORE_MKDIR)/Makefile.main all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main all
 
 $(LIBCUI): 
-	make -f $(CORE_MKDIR)/Makefile.cui all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.cui all
 
 $(LIBCPU): 
-	make -f $(TARGET_MKDIR)/Makefile.cpu all
+	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu all
 
 $(LIBDEVICE): 
-	make -f $(TARGET_MKDIR)/Makefile.device all
+	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.device all
 
 $(LIBBUS): 
-	make -f $(CORE_MKDIR)/Makefile.bus all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.bus all
 
 $(LIBLOADER):
-	make -f $(CORE_MKDIR)/Makefile.loader all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.loader all
 
 $(LIBMPU): 
-	make -f $(CORE_MKDIR)/Makefile.mpu all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mpu all
 
 $(LIBSTD):
-	make -f $(CORE_MKDIR)/Makefile.std all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std all
 
 $(LIBMROS):
-	make -f $(CORE_MKDIR)/Makefile.mros all
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
 
 clean:
-	make -f $(TARGET_MKDIR)/Makefile.cpu clean
-	make -f $(TARGET_MKDIR)/Makefile.device clean
-	make -f $(CORE_MKDIR)/Makefile.bus clean
-	make -f $(CORE_MKDIR)/Makefile.cui clean
-	make -f $(CORE_MKDIR)/Makefile.loader clean
-	make -f $(CORE_MKDIR)/Makefile.mpu clean
-	make -f $(CORE_MKDIR)/Makefile.std clean
-	make -f $(CORE_MKDIR)/Makefile.main clean
-	make -f $(CORE_MKDIR)/Makefile.mros clean
+	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu clean
+	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.device clean
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.bus clean
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.cui clean
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.loader clean
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mpu clean
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std clean
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main clean
+	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros clean
 	$(RM) -f $(TARGET) 
 	$(RM) -f $(INSTALL_DIR)/$(TARGET)
-		
+
+debug_clean:
+	cd $(OBJ_DEBUG); START_DIR=.. make clean
+
 list:
 	@echo $(AROBJS)
 
