@@ -40,7 +40,7 @@ build_all:
 	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
 	$(RANLIB) $(AROBJS)
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS)
-	$(CP) $(TARGET) $(INSTALL_DIR)/
+	$(CP) $(TARGET_DEBUG) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
 
 $(LIBMAIN):

@@ -29,6 +29,8 @@ all: $(AROBJS)
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS) -lm
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
+	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
+	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
 
 debug_all:
 	cd $(OBJ_DEBUG); START_DIR=.. make all
@@ -47,7 +49,7 @@ build_all:
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS)
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
-	$(CP) $(TARGET_NORMAL) $(INSTALL_DIR)/
+	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
 	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
 
 debug_build_all:
