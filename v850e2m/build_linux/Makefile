@@ -29,6 +29,7 @@ all: $(AROBJS)
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS) -lm
 	$(CP) $(TARGET) $(INSTALL_DIR)/
 	chmod +x $(INSTALL_DIR)/$(TARGET)
+
 debug_all:
 	cd $(OBJ_DEBUG); START_DIR=.. make all
 
