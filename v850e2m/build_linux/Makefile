@@ -37,6 +37,7 @@ debug_all:
 	cd $(OBJ_DEBUG); START_DIR=.. make all
 	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
 	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
+	$(NM) -n $(TARGET_NORMAL) > $(TARGET_NORMAL).syms
 
 debug_all:
 	cd $(OBJ_DEBUG); START_DIR=.. make all
