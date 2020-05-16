@@ -1,5 +1,6 @@
 START_DIR = ..
 include $(START_DIR)/Makefile.env
+XDEBUG = 1
 
 LIBCUI		:= libcui.a
 LIBCPU		:= libcpu.a
