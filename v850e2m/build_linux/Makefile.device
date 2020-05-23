@@ -1,4 +1,4 @@
-include $(START_DIR)/Makefile.env
+include $(STARTX_DIR)/Makefile.env
 
 LIBTARGET	:= libdevice.a
 

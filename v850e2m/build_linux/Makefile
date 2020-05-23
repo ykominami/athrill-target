@@ -1,5 +1,7 @@
-START_DIR = .
-include $(START_DIR)/Makefile.env
+XDEBUG			:= ""
+STARTX_DIR=$(PWD)
+#START_DIR = .
+include $(STARTX_DIR)/Makefile.env
 
 LIBCUI		:= libcui.a
 LIBCPU		:= libcpu.a
@@ -34,21 +36,18 @@ all: $(AROBJS)
 	$(NM) -n $(TARGET) > $(TARGET).syms
 
 debug_all:
-	cd $(OBJ_DEBUG); START_DIR=.. make all
-	$(CP) $(TARGET) $(INSTALL_DIR)/$(TARGET_NORMAL)
-	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
-	$(NM) -n $(TARGET_NORMAL) > $(TARGET_NORMAL).syms
+	cd $(OBJ_DEBUG); STARTX_DIR=$(STARTX_DIR) XDEBUG=1 make all
 
 build_all:
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main all
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.cui all
-	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu all
-	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.device all
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.bus all
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.loader all
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mpu all
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std all
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.main all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.cui all
+	STARTX_DIR=$(STARTX_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu all
+	STARTX_DIR=$(STARTX_DIR) make -f $(TARGET_MKDIR)/Makefile.device all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.bus all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.loader all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.mpu all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.std all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
 	$(RANLIB) $(AROBJS)
 	$(GCC) -O3 $(LFLAGS) $(AROBJS) -o $(TARGET)  $(LIBS) -lc -lm
 	$(CP) $(TARGET) $(INSTALL_DIR)/
@@ -57,53 +56,50 @@ build_all:
 	chmod +x $(INSTALL_DIR)/$(TARGET_NORMAL)
 
 debug_build_all:
-	cd $(OBJ_DEBUG); START_DIR=.. make build_all
-
-debug_build_all:
-	cd $(OBJ_DEBUG); START_DIR=.. make build_all
+	cd $(OBJ_DEBUG); STARTX_DIR=$(STARTX_DIR) XDEBUG=1 make build_all
 
 $(LIBMAIN):
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.main all
 
 $(LIBCUI): 
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.cui all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.cui all
 
 $(LIBCPU): 
-	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu all
+	STARTX_DIR=$(STARTX_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu all
 
 $(LIBDEVICE): 
-	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.device all
+	STARTX_DIR=$(STARTX_DIR) make -f $(TARGET_MKDIR)/Makefile.device all
 
 $(LIBBUS): 
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.bus all
+	STARTX_DIR=$(STARTX_DIR) make  -f $(CORE_MKDIR)/Makefile.bus all
 
 $(LIBLOADER):
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.loader all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.loader all
 
 $(LIBMPU): 
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mpu all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.mpu all
 
 $(LIBSTD):
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.std all
 
 $(LIBMROS):
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.mros all
 
 clean:
-	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu clean
-	START_DIR=$(START_DIR) make -f $(TARGET_MKDIR)/Makefile.device clean
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.bus clean
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.cui clean
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.loader clean
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mpu clean
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.std clean
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.main clean
-	START_DIR=$(START_DIR) make -f $(CORE_MKDIR)/Makefile.mros clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(TARGET_MKDIR)/Makefile.cpu clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(TARGET_MKDIR)/Makefile.device clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.bus clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.cui clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.loader clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.mpu clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.std clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.main clean
+	STARTX_DIR=$(STARTX_DIR) make -f $(CORE_MKDIR)/Makefile.mros clean
 	$(RM) -f $(TARGET) 
 	$(RM) -f $(INSTALL_DIR)/$(TARGET)
 
 debug_clean:
-	cd $(OBJ_DEBUG); START_DIR=.. make clean
+	cd $(OBJ_DEBUG); STARTX_DIR=$(STARTX_DIR) make clean
 
 list:
 	@echo $(AROBJS)
